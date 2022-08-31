@@ -3,8 +3,8 @@ import sys
 from cx_Freeze import Executable, setup
 
 base = None
-#if sys.platform == "win32":
-#base = "Win32GUI"
+if sys.platform == "win32":
+    base = "Win32GUI"
 
 options = {
     "build_exe": {
@@ -18,7 +18,7 @@ executables = [Executable("main.py", base=base)]
 
 setup(
     name="Xmind2Anki PRO",
-    version="0.2",
+    version="1.0.0",
     description="This app implements a simple tool to convert XMind files to Anki cards with Anki Connect",
     options=options,
     executables=executables,
