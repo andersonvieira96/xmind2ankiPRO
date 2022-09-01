@@ -139,10 +139,8 @@ class XmindParser:
         return {'id': XmindParser.get_id_from_xmind_node(node),
                 'title': XmindParser.get_title_from_xmind_node(node),
                 'image': XmindParser.get_image_from_xmind_node(node, back_up_dir_path),
-                'children': [{
-                    "title": XmindParser.get_children_titles(node, hrefs)[0],
-                    'image': XmindParser.get_children_images(node, hrefs, back_up_dir_path)[0],
-                }],
+                'children': XmindParser.get_children_titles(node, hrefs),
+                'children_image': XmindParser.get_children_images(node, hrefs, back_up_dir_path),
                 'ancestors': ancestors}
 
     @staticmethod

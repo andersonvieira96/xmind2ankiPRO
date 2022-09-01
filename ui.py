@@ -11,6 +11,7 @@ ws.grid_columnconfigure((0, 4), weight=1)
 
 xmind_file_path = ""
 
+
 class Props:
     xmind_file_path: str
 
@@ -23,9 +24,9 @@ def open_file():
 
 
 def uploadFiles():
+    progress_bar()
     courier = Courier(Props.xmind_file_path)
     courier.upload_all_changes_to_anki()
-    progress_bar()
 
 
 def disable():
@@ -37,20 +38,26 @@ def activated():
 
 
 def progress_bar():
-    pb1 = Progressbar(
-        ws,
-        orient=HORIZONTAL,
-        length=300,
-        mode='determinate'
-    )
-    pb1.grid(row=4, columnspan=3, pady=20)
+    pb1.grid(row=4, column=1, columnspan=2, sticky="ew", pady=10)
 
-    for i in range(5):
-        ws.update_idletasks()
-        pb1['value'] += 20
-        time.sleep(1)
-    pb1.destroy()
-    Label(ws, text='File Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
+
+def update_progress_bar():
+    ws.update_idletasks()
+    pb1['value'] += 20
+    time.sleep(1)
+    if pb1['value'] == 100:
+        Label(ws, text='File Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
+
+def update_progress_bar_error():
+    Label(ws, text='File sent with error!', foreground='red').grid(row=4, columnspan=3, pady=10)
+
+
+pb1 = Progressbar(
+    ws,
+    orient=HORIZONTAL,
+    length=300,
+    mode='determinate'
+)
 
 
 adhar = Label(

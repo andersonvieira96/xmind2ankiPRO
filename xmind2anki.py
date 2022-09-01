@@ -3,6 +3,7 @@ from os import sep, mkdir
 from os.path import exists, dirname
 from typing import List, Tuple
 
+import ui
 from anki_connect import AnkiConnector, warn_print
 from cvtmode.knowledge_for_hunting_jobs import JobInterviewKnowledgeMode
 from xmind_parser import XmindParser, ParsedNodeFromXmind
@@ -117,15 +118,22 @@ class Courier:
         self.anki_connect.create_deck(deck_name=self.deck_name)
 
     def upload_all_changes_to_anki(self):
-        self.create_deck_anki()
+        try:
+            ui.update_progress_bar()
+            self.create_deck_anki()
+            ui.update_progress_bar()
+            self.update_changes_from_xmind()
+            ui.update_progress_bar()
+            self.back_up_anki()
+            ui.update_progress_bar()
 
-        self.update_changes_from_xmind()
-        self.back_up_anki()
-
-        self.delete_notes_in_anki()
-        self.upload_new_notes_to_anki()
-        self.upload_changed_notes_to_anki()
-        self.xmind_parser.create_backup_xmind_file()
+            self.delete_notes_in_anki()
+            self.upload_new_notes_to_anki()
+            self.upload_changed_notes_to_anki()
+            self.xmind_parser.create_backup_xmind_file()
+            ui.update_progress_bar()
+        except:
+            ui.update_progress_bar_error()
 
 
 if __name__ == '__main__':

@@ -18,11 +18,9 @@ class CvtMode:
         front = cls.__decorate_string(front)
         back = ''
         for child in node['children']:
-            back = back + cls.__decorate_string(child["title"])
-            try:
-                image.append({"node": child["image"], "side": "Verso"})
-            except:
-                print("Deu ruim")
+            back = back + cls.__decorate_string(child)
+        for child in node['children_image']:
+            image.append({"node": child, "side": "Verso"})
 
         return cls.__make_note(fields=cls.__transform_to_common_note_fields(front, back),
                                deck_name=cls.deck_name, model_name=cls.models[0], tags=cls.tags,

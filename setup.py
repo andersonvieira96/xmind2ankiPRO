@@ -18,7 +18,7 @@ executables = [Executable("main.py", base=base)]
 
 setup(
     name="Xmind2Anki PRO",
-    version="1.0.0",
+    version="1.0.1",
     description="This app implements a simple tool to convert XMind files to Anki cards with Anki Connect",
     options=options,
     executables=executables,
