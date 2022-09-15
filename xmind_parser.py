@@ -1,5 +1,6 @@
 import json
 import zipfile
+import base64
 from os import sep, mkdir, listdir
 from os.path import exists, getctime
 from shutil import copyfile
@@ -80,7 +81,10 @@ class XmindParser:
         try:
             image = xmind_node["image"]
             image = image["src"].replace("xap:", back_up_dir_path + "/")
-            return image.replace("/", "\\")
+            image = image.replace("/", "\\")
+            with open(image, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read())
+            return encoded_string.decode('ascii')
         except:
             return None
 

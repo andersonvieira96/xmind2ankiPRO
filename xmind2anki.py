@@ -4,6 +4,7 @@ from os.path import exists, dirname
 from typing import List, Tuple
 
 import ui
+import base64
 from anki_connect import AnkiConnector, warn_print
 from cvtmode.knowledge_for_hunting_jobs import JobInterviewKnowledgeMode
 from xmind_parser import XmindParser, ParsedNodeFromXmind

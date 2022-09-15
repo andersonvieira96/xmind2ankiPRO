@@ -42,8 +42,8 @@ class CvtMode:
         for img in image:
             if img["node"] is not None:
                 src.append({
-                    "path": img["node"],
-                    "filename": img["node"],
+                    "data": img["node"],
+                    "filename": img["node"][0:5],
                     "fields": [img["side"]]
                 })
         return src
