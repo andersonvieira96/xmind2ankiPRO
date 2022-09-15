@@ -84,9 +84,11 @@ class XmindParser:
             image = image.replace("/", "\\")
             with open(image, "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read())
-            return encoded_string.decode('ascii')
+            return {"data": encoded_string.decode('ascii'), "ext": xmind_node["image"]["src"].split(".")[1]}
         except:
             return None
+
+
 
     @staticmethod
     def get_id_from_xmind_node(xmind_node):

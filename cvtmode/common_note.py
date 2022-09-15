@@ -12,15 +12,21 @@ class CvtMode:
     def transform_node_to_note(cls, node: ParsedNodeFromXmind):
         image : List = []
         front = node['title']
-        image.append({"node": node["image"], "side": "Frente"})
         for ancestor in reversed(node['ancestors']):
             front = ancestor + ' -> ' + front
         front = cls.__decorate_string(front)
         back = ''
         for child in node['children']:
             back = back + cls.__decorate_string(child)
-        for child in node['children_image']:
-            image.append({"node": child, "side": "Verso"})
+        try:
+            image.append({"node": node["image"]["data"], "side": "Frente", "ext":node["image"]["ext"]})
+        except:
+            image = []
+        try:
+            for child in node['children_image']:
+                image.append({"node": child["data"], "side": "Verso", "ext": child["ext"]})
+        except:
+            print("no children_image")
 
         return cls.__make_note(fields=cls.__transform_to_common_note_fields(front, back),
                                deck_name=cls.deck_name, model_name=cls.models[0], tags=cls.tags,
@@ -43,7 +49,7 @@ class CvtMode:
             if img["node"] is not None:
                 src.append({
                     "data": img["node"],
-                    "filename": img["node"][0:5],
+                    "filename": img["node"][0:5]+"."+img["ext"],
                     "fields": [img["side"]]
                 })
         return src
